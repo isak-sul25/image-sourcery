@@ -27,7 +27,7 @@ export function isDirectImageURL(url: string) {
 /**
  * Get thumbnail if available, or return "" if not
  */
-async function getThumbnail(post: Post): Promise<string> {
+export async function getThumbnail(post: Post): Promise<string> {
 	const eThumb = await post.getEnrichedThumbnail();
 
 	if (eThumb?.image?.url) {
@@ -57,7 +57,8 @@ export function getReverseImageSearchURL(engine: string, image_url: string): str
 
 	switch (engine) {
 		case "google-images":
-			return `https://www.google.com/searchbyimage?image_url=${image_url}&client=app`;
+			//return `https://www.google.com/searchbyimage?image_url=${image_url}&client=app`;
+			return `https://lens.google.com/uploadbyurl?url=${image_url}&safe=off`;
 		case "google-lens":
 			return `https://lens.google.com/uploadbyurl?url=${image_url}&safe=off`;
 		case "sauce-nao":
@@ -67,6 +68,6 @@ export function getReverseImageSearchURL(engine: string, image_url: string): str
 		case "yandex":
 			return `https://yandex.com/images/search?rpt=imageview&url=${image_url}`;
 		default:
-			throw new Error("Invalid search engine selected.");
+			return `https://lens.google.com/uploadbyurl?url=${image_url}&safe=off`;
 	}
 }

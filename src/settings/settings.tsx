@@ -11,10 +11,9 @@ const addSettings = () => {
 			required: true,
 			name: "search-engine",
 			label: "Reverse Image Search Engine Menu Option",
-			defaultValue: ["google-images"], // Default to Google Images
+			defaultValue: ["google-lens"], // Default to Google Images
 			helpText: "Select the reverse image search engine to be used for the menu option on the subreddit.",
 			options: [
-				{label: "Google Images", value: "google-images"},
 				{label: "Google Lens", value: "google-lens"},
 				{label: "SauceNAO", value: "sauce-nao"},
 				{label: "IQDB", value: "iqdb"},
@@ -55,10 +54,9 @@ const addSettings = () => {
 					label: "Reverse Image Search Engines",
 					required: true,
 					multiSelect: true,
-					defaultValue: ["google-images"], // Default to Google Images and SauceNAO
+					defaultValue: ["google-lens", "sauce-nao"], // Default to Google Images and SauceNAO
 					helpText: "Select the reverse image search engines to use in the comment.",
 					options: [
-						{label: "Google Images", value: "google-images"},
 						{label: "Google Lens", value: "google-lens"},
 						{label: "SauceNAO", value: "sauce-nao"},
 						{label: "IQDB", value: "iqdb"},

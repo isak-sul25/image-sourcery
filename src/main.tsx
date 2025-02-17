@@ -1,7 +1,7 @@
 import { Comment, Context, Devvit, MenuItemOnPressEvent } from "@devvit/public-api";
 import { getCommentModOptions, getCommentTrigger } from "./settings/getters.js";
 import { checkPost } from "./list_check/list_check.js";
-import { getImageURL, getReverseImageSearchURL, isDirectImageURL } from "./helpers.js";
+import { getImageURL, getReverseImageSearchURL, getThumbnail, isDirectImageURL } from "./helpers.js";
 import { getCommentMessage } from "./comment/message.js";
 import { addSettings } from "./settings/settings.js";
 
@@ -25,7 +25,7 @@ Devvit.addMenuItem({
 		const image_url: string = await getImageURL(event, context);
 
 		if (image_url) {
-			const search_engine_value = await context.settings.get("search-engine") || ["google-images"]; // Get chosen search engine, default to Google Images
+			const search_engine_value = await context.settings.get("search-engine") || ["google-lens"]; // Get chosen search engine, default to Google Images
 			const search_engine = Array.isArray(search_engine_value) ? search_engine_value[0] : search_engine_value; // Unpack array
 
 			ui.navigateTo(getReverseImageSearchURL(search_engine.toString(), image_url));
@@ -56,6 +56,8 @@ Devvit.addTrigger({
 			return;
 		}
 
+		// Check original post for crossposts
+		//const postId = postV2.crosspostParentId ? postV2.crosspostParentId : postV2.id;
 		const postId = postV2.id;
 		const post = await context.reddit.getPostById(postId);
 
@@ -65,10 +67,20 @@ Devvit.addTrigger({
 			return;
 		}
 
-		const postURL = post.url;
+		let postURL = post.url;
 
-		// Return if post doesn't contain images
-		if (!(isDirectImageURL(postURL) || postV2.galleryImages.length > 0)) {
+		// Continue if an image or gallery
+		if (isDirectImageURL(postURL) || postV2.galleryImages.length > 0) {
+
+			// Else, check if crosspost and get thumbnail
+		} else if (postV2.crosspostParentId) {
+			postURL = await getThumbnail(await context.reddit.getPostById(postV2.crosspostParentId));
+
+			if (!postURL) {
+				console.log("New crosspost doesn't contain thumbnail - ignoring...");
+				return;
+			}
+		} else {
 			console.log("New post doesn't contain images - ignoring...");
 			return;
 		}
