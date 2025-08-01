@@ -23,8 +23,7 @@ export async function formatLinks(images: string[], context: TriggerContext): Pr
 		for (const [j, engine] of engines.entries()) {
 			switch (engine) {
 				case "google-images":
-					//message += `[Google Images](${getReverseImageSearchURL(engine, image)})`;
-					message += `[Google Lens](${getReverseImageSearchURL(engine, image)})`;
+					message += `[Google Images](${getReverseImageSearchURL(engine, image)})`;
 					break;
 				case "google-lens":
 					message += `[Google Lens](${getReverseImageSearchURL(engine, image)})`;
@@ -37,6 +36,12 @@ export async function formatLinks(images: string[], context: TriggerContext): Pr
 					break;
 				case "yandex":
 					message += `[Yandex](${getReverseImageSearchURL(engine, image)})`;
+					break;
+				case "tin-eye":
+					message += `[TinEye](${getReverseImageSearchURL(engine, image)})`;
+					break;
+				case "bing":
+					message += `[Bing](${getReverseImageSearchURL(engine, image)})`;
 					break;
 			}
 

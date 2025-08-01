@@ -10,19 +10,17 @@ selected engines (multi-image posts are supported!).
 
 # What's New?
 
-### Retiring Google Images
-Google Images no longer seems to work so it has been retired as an option - 
-it will be missed.
+### New Search Engines Available: TinEye and Bing
 
-### Some Crosspost Compatibility
-While there isn't a simple way to make the Menu Option work for crossposts, 
-I have added some support for the Reverse Image Search Comment - it will use 
-the thumbnail of the original post.
+### Select Form for Image Galleries
+You can now optionally toggle a new way to reverse image search gallery 
+posts through the menu option - you can choose the number of the image to be 
+searched instead of just searching the first image.
 
-### GitHub Repository
-
-The app code is now publicly available on [GitHub](https://github.com/isak-sul25/image-sourcery)
-for all interested in the meat and bones of it.
+The reason this is optional is that it doesn't consistently work for me - 
+it's fine on the Reddit site, but it's giving me an error on the app. Do let 
+me know how it works (or doesn't work) for you, so I can know for sure if 
+it's just a *me* issue.
 
 # Reverse Image Search Engine Menu Option
 
@@ -37,7 +35,8 @@ the reverse image search engine to be used by the app on your subreddit.
 
 ![3](https://i.imgur.com/R2q0dED.png)
 
-The currently available engines are: Google Lens (default), SauceNAO, IQDB and Yandex.
+The currently available engines are: Google Lens (default), Google Images, 
+SauceNAO, IQDB, Yandex, TinEye and Bing.
 
 # Reverse Image Search Comment
 
@@ -91,3 +90,7 @@ You can also check my spaghetti code on [GitHub](https://github.com/isak-sul25/i
   * Google Images has been retired as an option. 
   * Implemented some crosspost compatibility
   * Published GitHub repository
+* v2.1.1: the "*unRIP Google Images*" update
+* v3.1: the "*Galleries!*" update:
+  * Added an optional select form for Gallery posts.
+  * Added two new reverse image search engines: TinEye and Bing.

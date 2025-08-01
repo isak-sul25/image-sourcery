@@ -4,17 +4,26 @@ import { Devvit, MenuItemOnPressEvent, Post } from "@devvit/public-api";
  * Returns post image link or thumbnail if gallery, Imgur album, etc.
  * "" is returned if no thumbnail is available.
  */
-export async function getImageURL(event: MenuItemOnPressEvent, context: Devvit.Context) {
-	let image_link: string;
+export async function getImageURLs(event: MenuItemOnPressEvent, context: Devvit.Context) {
+	let image_links: string[] = [];
 	const post: Post = await context.reddit.getPostById(event.targetId);
 
 	if (isDirectImageURL(post.url)) {
-		image_link = post.url;
+		image_links.push(post.url);
+
+	} else if (post.gallery.length) {
+		for (const image of post.gallery) {
+			image_links.push(image.url.replace("preview", "i").split("?")[0]);
+		}
 	} else {
-		image_link = await getThumbnail(post);
+		const thumbnail = await getThumbnail(post)
+
+		if (thumbnail) {
+			image_links.push(await getThumbnail(post));
+		}
 	}
 
-	return image_link;
+	return image_links;
 }
 
 /**
@@ -57,8 +66,7 @@ export function getReverseImageSearchURL(engine: string, image_url: string): str
 
 	switch (engine) {
 		case "google-images":
-			//return `https://www.google.com/searchbyimage?image_url=${image_url}&client=app`;
-			return `https://lens.google.com/uploadbyurl?url=${image_url}&safe=off`;
+			return `https://www.google.com/searchbyimage?image_url=${image_url}&client=app`;
 		case "google-lens":
 			return `https://lens.google.com/uploadbyurl?url=${image_url}&safe=off`;
 		case "sauce-nao":
@@ -67,6 +75,10 @@ export function getReverseImageSearchURL(engine: string, image_url: string): str
 			return `https://iqdb.org/?url=${image_url}`;
 		case "yandex":
 			return `https://yandex.com/images/search?rpt=imageview&url=${image_url}`;
+		case "tin-eye":
+			return `https://tineye.com/search?url=${image_url}`;
+		case "bing":
+			return `https://www.bing.com/images/searchbyimage?cbir=sbi&imgurl=${image_url}`;
 		default:
 			return `https://lens.google.com/uploadbyurl?url=${image_url}&safe=off`;
 	}

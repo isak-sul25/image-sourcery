@@ -1,7 +1,7 @@
 import { Comment, Context, Devvit, MenuItemOnPressEvent } from "@devvit/public-api";
 import { getCommentModOptions, getCommentTrigger } from "./settings/getters.js";
 import { checkPost } from "./list_check/list_check.js";
-import { getImageURL, getReverseImageSearchURL, getThumbnail, isDirectImageURL } from "./helpers.js";
+import { getImageURLs, getReverseImageSearchURL, getThumbnail, isDirectImageURL } from "./helpers.js";
 import { getCommentMessage } from "./comment/message.js";
 import { addSettings } from "./settings/settings.js";
 
@@ -21,18 +21,53 @@ Devvit.addMenuItem({
 	location: "post", label: "Reverse Image Search",
 
 	onPress: async(event: MenuItemOnPressEvent, context: Context) => {
+
 		const {ui} = context;
-		const image_url: string = await getImageURL(event, context);
+		const image_urls: string[] = await getImageURLs(event, context);
 
-		if (image_url) {
-			const search_engine_value = await context.settings.get("search-engine") || ["google-lens"]; // Get chosen search engine, default to Google Images
+		if (image_urls.length) {
+			const search_engine_value = await context.settings.get("search-engine") || ["google-images"]; // Get chosen search engine, default to Google Images
 			const search_engine = Array.isArray(search_engine_value) ? search_engine_value[0] : search_engine_value; // Unpack array
+			const gallery_form = Boolean(await context.settings.get("gallery-form")) || false; // Whether to use a
+			// selection form for gallery posts
 
-			ui.navigateTo(getReverseImageSearchURL(search_engine.toString(), image_url));
+			// Navigate to search of first image if there is only 1 image or gallery_form is false
+			if (image_urls.length == 1 || !gallery_form) {
+				ui.navigateTo(getReverseImageSearchURL(search_engine.toString(), image_urls[0]));
+			} else {
+
+				// Options for a gallery select form in the format:
+				// label: image number,
+				// value: reverse image search link
+				const options = image_urls.map((_, i) => ({
+					label: `Image ${i + 1}`, value: getReverseImageSearchURL(search_engine.toString(), image_urls[i])
+				}));
+
+				context.ui.showForm(ImageSelectForm, {options});
+			}
 		} else {
 			ui.showToast(`Post type not supported!`);
 		}
 	}
+});
+
+/**
+ * A form to be used for image galleries that lets the user select the number of the image they want to search.
+ */
+const ImageSelectForm = Devvit.createForm((data) => {
+	return {
+		fields: [
+			{
+				type: "select",
+				name: "selectedImage",
+				label: "Select an image to reverse search:",
+				options: data.options
+			}
+		]
+	} as const;
+}, (event, context) => {
+	const image_url = event.values.selectedImage[0];
+	context.ui.navigateTo(image_url);
 });
 
 /**

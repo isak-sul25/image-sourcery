@@ -3,6 +3,9 @@ import { Devvit } from "@devvit/public-api";
 /**
  * App Settings:
  * - select: choose reverse image search engine
+ * - boolean: use gallery form
+ * - Whitelist
+ * - Blacklist
  */
 const addSettings = () => {
 	Devvit.addSettings([
@@ -11,14 +14,24 @@ const addSettings = () => {
 			required: true,
 			name: "search-engine",
 			label: "Reverse Image Search Engine Menu Option",
-			defaultValue: ["google-lens"], // Default to Google Images
+			defaultValue: ["google-images"], // Default to Google Images
 			helpText: "Select the reverse image search engine to be used for the menu option on the subreddit.",
 			options: [
+				{label: "Google Images", value: "google-images"},
 				{label: "Google Lens", value: "google-lens"},
 				{label: "SauceNAO", value: "sauce-nao"},
 				{label: "IQDB", value: "iqdb"},
-				{label: "Yandex", value: "yandex"}
+				{label: "Yandex", value: "yandex"},
+				{label: "TinEye", value: "tin-eye"},
+				{label: "Bing", value: "bing"}
 			]
+		}, {
+			type: "boolean",
+			name: "gallery-form",
+			required: true,
+			defaultValue: false,
+			label: "Enable Form Select for Gallery Posts?",
+			helpText: "Use a form that lets you select the number of the image to search for gallery posts."
 		}, {
 			type: "group",
 			label: "Reverse Image Search Comment",
@@ -40,7 +53,8 @@ const addSettings = () => {
 					helpText: "Choose when the app should check posts. If a comment already exists, it will be"
 					          + " edited instead.",
 					options: [
-						{label: "On New Posts", value: "PostCreate"}, {label: "On Flair Update", value: "PostFlairUpdate"}
+						{label: "On New Posts", value: "PostCreate"},
+						{label: "On Flair Update", value: "PostFlairUpdate"}
 					]
 				}, {
 					type: "paragraph",
@@ -54,13 +68,16 @@ const addSettings = () => {
 					label: "Reverse Image Search Engines",
 					required: true,
 					multiSelect: true,
-					defaultValue: ["google-lens", "sauce-nao"], // Default to Google Images and SauceNAO
+					defaultValue: ["google-images", "sauce-nao"], // Default to Google Images and SauceNAO
 					helpText: "Select the reverse image search engines to use in the comment.",
 					options: [
+						{label: "Google Images", value: "google-images"},
 						{label: "Google Lens", value: "google-lens"},
 						{label: "SauceNAO", value: "sauce-nao"},
 						{label: "IQDB", value: "iqdb"},
 						{label: "Yandex", value: "yandex"},
+						{label: "TinEye", value: "tin-eye"},
+						{label: "Bing", value: "bing"}
 					],
 					onValidate: event => validateAtLeastOneSelected(event.value)
 				}, {
