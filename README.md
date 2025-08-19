@@ -91,6 +91,7 @@ You can also check my spaghetti code on [GitHub](https://github.com/isak-sul25/i
   * Implemented some crosspost compatibility
   * Published GitHub repository
 * v2.1.1: the "*unRIP Google Images*" update
-* v3.1: the "*Galleries!*" update:
+* v3.0: the "*Galleries!*" update:
   * Added an optional select form for Gallery posts.
   * Added two new reverse image search engines: TinEye and Bing.
+* v3.0.1: fixed Bing so it can work on mobile.

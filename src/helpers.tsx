@@ -78,7 +78,7 @@ export function getReverseImageSearchURL(engine: string, image_url: string): str
 		case "tin-eye":
 			return `https://tineye.com/search?url=${image_url}`;
 		case "bing":
-			return `https://www.bing.com/images/searchbyimage?cbir=sbi&imgurl=${image_url}`;
+			return `https://www.bing.com/images/search?view=detailv2&iss=sbi&q=imgurl:${image_url}`;
 		default:
 			return `https://lens.google.com/uploadbyurl?url=${image_url}&safe=off`;
 	}
