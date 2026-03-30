@@ -1,14 +1,19 @@
-# Image Sourcery
+# Image Sourcery
 
 Reverse image searching made (mostly) simple: add a menu option on posts one can
 use to reverse image search image posts, or automate a comment that links to 
 selected engines (multi-image posts are supported!).
 
-![1](https://i.imgur.com/dHewG8u.png)
+![1](https://files.catbox.moe/7mtynx.png)
 
-![2](https://i.imgur.com/A1PCBWp.png)
+![2](https://files.catbox.moe/ewa102.png)
 
 # What's New?
+
+### New Search Engine Available: ArtResearch.net
+
+[ArtResearch.net](https://artresearch.net) is a reverse image search engine specialising
+in artworks. It is available as both a menu option and as an automated comment engine.
 
 ### New Search Engines Available: TinEye and Bing
 
@@ -33,16 +38,16 @@ similar media can be found.
 Currently, the only available configuration option has to do with choosing 
 the reverse image search engine to be used by the app on your subreddit.
 
-![3](https://i.imgur.com/R2q0dED.png)
+![3](https://files.catbox.moe/vfnidp.png)
 
-The currently available engines are: Google Lens (default), Google Images, 
-SauceNAO, IQDB, Yandex, TinEye and Bing.
+The currently available engines are: Google Images, Google Lens, SauceNAO,
+IQDB, Yandex, TinEye, Bing and ArtResearch.net.
 
 # Reverse Image Search Comment
 
-[comment]: https://i.imgur.com/JuZn56Z.png
-[rise_options]: https://i.imgur.com/eeMfQbp.png
-[rise_lists]: https://i.imgur.com/mLkRlVC.png
+[comment]: https://files.catbox.moe/ctje1u.png
+[rise_options]: https://files.catbox.moe/lxbg92.png
+[rise_lists]: https://files.catbox.moe/y45bxz.png
 
 The app can add a comment under posts linking to one or more reverse 
 image search engines. Posts with multiple images are supported and an 
@@ -94,4 +99,5 @@ You can also check my spaghetti code on [GitHub](https://github.com/isak-sul25/i
 * v3.0: the "*Galleries!*" update:
   * Added an optional select form for Gallery posts.
   * Added two new reverse image search engines: TinEye and Bing.
-* v3.0.1: fixed Bing so it can work on mobile.
+* v3.0.1: Fixed Bing so it can work on mobile.
+* v3.1: Added ArtResearch.net as a reverse image search engine.

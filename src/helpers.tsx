@@ -77,6 +77,8 @@ export function getReverseImageSearchURL(engine: string, image_url: string): str
 			return `https://yandex.com/images/search?rpt=imageview&url=${image_url}`;
 		case "tin-eye":
 			return `https://tineye.com/search?url=${image_url}`;
+		case "art-research":
+			return `https://artresearch.net/resource/search?query=${image_url}`;
 		case "bing":
 			return `https://www.bing.com/images/search?view=detailv2&iss=sbi&q=imgurl:${image_url}`;
 		default:

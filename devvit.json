@@ -1,0 +1,7 @@
+{
+  "name": "image-sourcery",
+  "blocks": {
+    "entry": "src/main.tsx",
+    "triggers": ["onPostCreate", "onPostFlairUpdate"]
+  }
+}
